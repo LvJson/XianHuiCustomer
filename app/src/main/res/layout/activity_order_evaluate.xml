@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/weixin_lianxiren_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/tool_bar"></include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#fff"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="#FFCCD3" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:text="评价"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/order_start0"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/start_solid" />
+
+                <ImageView
+                    android:id="@+id/order_start1"
+                    style="@style/OrderEvaluateActivityStartStyle" />
+
+                <ImageView
+                    android:id="@+id/order_start2"
+                    style="@style/OrderEvaluateActivityStartStyle" />
+
+                <ImageView
+                    android:id="@+id/order_start3"
+                    style="@style/OrderEvaluateActivityStartStyle" />
+
+                <ImageView
+                    android:id="@+id/order_start4"
+                    style="@style/OrderEvaluateActivityStartStyle" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_feel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="#fff"
+        android:gravity="start"
+        android:hint="这个项目感觉如何?"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="购买意愿"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp">
+
+                <ImageView
+                    android:id="@+id/buy_start0"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/start_solid" />
+
+                <ImageView
+                    android:id="@+id/buy_start1"
+                    style="@style/OrderEvaluateActivityStartStyle" />
+
+                <ImageView
+                    android:id="@+id/buy_start2"
+                    style="@style/OrderEvaluateActivityStartStyle" />
+
+                <ImageView
+                    android:id="@+id/buy_start3"
+                    style="@style/OrderEvaluateActivityStartStyle" />
+
+                <ImageView
+                    android:id="@+id/buy_start4"
+                    style="@style/OrderEvaluateActivityStartStyle" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/buy_choose0"
+                style="@style/OrderTextStyle"
+                android:text="技术好差" />
+
+            <TextView
+                android:id="@+id/buy_choose1"
+                style="@style/OrderTextStyle"
+                android:text="环境好差" />
+
+            <TextView
+                android:id="@+id/buy_choose2"
+                style="@style/OrderTextStyle"
+                android:text="价格坑" />
+
+            <TextView
+                android:id="@+id/buy_choose3"
+                style="@style/OrderTextStyle"
+                android:text="顾问挫" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="2" >
+        <TextView
+            android:id="@+id/tv_go_evaluate"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/orderTextColor"
+            android:gravity="center"
+            android:alpha="0.5"
+            android:text="去抽奖"
+            android:textColor="#fff"
+            android:textSize="18dp" />
+    </LinearLayout>
+</LinearLayout>

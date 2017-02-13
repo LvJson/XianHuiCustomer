@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorLightYellow">#D3B88D</color>
+    <color name="gray_weixin">#989898</color>
+    <color name="weixin_lianxiren_gray">#EBEBEB</color>
+    <color name="register_edittext_bg_gray">#D5D5D5</color>
+    <color name="bar_color">#CFB68E</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorDarkYello">#846048</color>
+    <color name="orderTextColor">#30A2F0</color>
+    <color name="all_text_color">#353535</color>
+    <color name="orange">#FA8416</color>
+    <color name="money_color">#31CBA7</color>
+    <color name="project_color">#F2B7E0</color>
+</resources>

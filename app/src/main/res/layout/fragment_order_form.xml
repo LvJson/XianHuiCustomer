@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/incloud"
+        layout="@layout/tool_bar"></include>
+
+    <LinearLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/incloud">
+
+        <TextView
+            android:id="@+id/tv_all"
+            style="@style/WorkActivityHeadStyle"
+            android:text="全部" />
+
+        <TextView
+            android:id="@+id/tv_no_evaluate"
+            style="@style/WorkActivityHeadStyle"
+            android:text="未评价" />
+
+        <TextView
+            android:id="@+id/tv_wait_lottery"
+            style="@style/WorkActivityHeadStyle"
+            android:text="待抽奖" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_over"
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:layout_below="@+id/tab"
+        android:background="@color/colorDarkYello"></ImageView>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_mywork"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/iv_over"
+        android:layout_marginTop="-1dp"></android.support.v4.view.ViewPager>
+</RelativeLayout>
