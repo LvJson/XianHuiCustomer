@@ -16,6 +16,7 @@ import com.maibo.lys.xianhuicustomer.R;
 import com.maibo.lys.xianhuicustomer.myactivity.LotteryWebActivity;
 import com.maibo.lys.xianhuicustomer.myactivity.OrderEvaluateActivity;
 import com.maibo.lys.xianhuicustomer.myactivity.SplashActivity;
+import com.maibo.lys.xianhuicustomer.myview.AvatarImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,29 +26,32 @@ import butterknife.OnClick;
  * Created by LYS on 2017/1/13.
  */
 
-public class MineFragment extends Fragment implements View.OnClickListener{
+public class MineFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.tv_quit_app)
     TextView tv_quit_app;
     @Bind(R.id.tv_invite)
     TextView tv_invite;
+    @Bind(R.id.avatarIv)
+    AvatarImageView avatarImageView;
 
     private View rootView;
     SharedPreferences sp;
-    @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
 
-        if(rootView==null){
-            rootView=inflater.inflate(R.layout.fragment_mine, null);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_mine, null);
         }
         //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {
             parent.removeView(rootView);
         }
-        ButterKnife.bind(this,rootView);
+
+        ButterKnife.bind(this, rootView);
         initView();
         initListener();
-
         return rootView;
     }
 
@@ -55,7 +59,11 @@ public class MineFragment extends Fragment implements View.OnClickListener{
      * 初始化view
      */
     private void initView() {
-        sp=getActivity().getSharedPreferences("BaseDatas", Context.MODE_PRIVATE);
+        sp = getActivity().getSharedPreferences("BaseDatas", Context.MODE_PRIVATE);
+        avatarImageView.setTitleColor("#353535");
+        avatarImageView.setLineColor("#EBEBEB");
+        avatarImageView.setBtnTextColor("#30A2F0");
+        avatarImageView.setTitleLineColor("#989898");
     }
 
     private void initListener() {
@@ -68,14 +76,15 @@ public class MineFragment extends Fragment implements View.OnClickListener{
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
     @OnClick(R.id.tv_evaluate)
-    public void evaluate(View view){
+    public void evaluate(View view) {
         startActivity(new Intent(getActivity(), OrderEvaluateActivity.class));
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_quit_app:
                 quitApp();
                 break;
@@ -107,5 +116,17 @@ public class MineFragment extends Fragment implements View.OnClickListener{
             }
         });
         ad.show();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    public void setActivityResult(int requestCode, int resultCode, Intent data) {
+        if (avatarImageView != null) {
+            avatarImageView.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

@@ -4,12 +4,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.maibo.lys.xianhuicustomer.R;
 import com.maibo.lys.xianhuicustomer.myutils.Util;
+import com.maibo.lys.xianhuicustomer.myview.CustomImageView;
 
 import butterknife.Bind;
 
@@ -22,26 +22,26 @@ import static com.maibo.lys.xianhuicustomer.R.drawable.order_text_full_bg;
 public class OrderEvaluateActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.order_start0)
-    ImageView order_start0;
+    CustomImageView order_start0;
     @Bind(R.id.order_start1)
-    ImageView order_start1;
+    CustomImageView order_start1;
     @Bind(R.id.order_start2)
-    ImageView order_start2;
+    CustomImageView order_start2;
     @Bind(R.id.order_start3)
-    ImageView order_start3;
+    CustomImageView order_start3;
     @Bind(R.id.order_start4)
-    ImageView order_start4;
+    CustomImageView order_start4;
 
     @Bind(R.id.buy_start0)
-    ImageView buy_start0;
+    CustomImageView buy_start0;
     @Bind(R.id.buy_start1)
-    ImageView buy_start1;
+    CustomImageView buy_start1;
     @Bind(R.id.buy_start2)
-    ImageView buy_start2;
+    CustomImageView buy_start2;
     @Bind(R.id.buy_start3)
-    ImageView buy_start3;
+    CustomImageView buy_start3;
     @Bind(R.id.buy_start4)
-    ImageView buy_start4;
+    CustomImageView buy_start4;
 
     @Bind(R.id.buy_choose0)
     TextView buy_choose0;

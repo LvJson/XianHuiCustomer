@@ -379,6 +379,7 @@ public class HomePagerRecyclerFragment extends Fragment implements View.OnClickL
         /**
          * 处理二维码扫描结果
          */
+        Log.e("Home","onactivity");
         if (requestCode == 1) {
             //处理扫描结果（在界面上显示）
             if (null != data) {

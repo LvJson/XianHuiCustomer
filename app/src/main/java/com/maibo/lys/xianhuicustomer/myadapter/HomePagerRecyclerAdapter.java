@@ -188,7 +188,6 @@ public class HomePagerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             executor.shutdownNow();
         }
     }
-
     /**
      * 横向ListView
      */

@@ -42,26 +42,26 @@
                 android:layout_weight="2"
                 android:gravity="center_vertical">
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/order_start0"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginRight="10dp"
                     android:src="@mipmap/start_solid" />
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/order_start1"
                     style="@style/OrderEvaluateActivityStartStyle" />
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/order_start2"
                     style="@style/OrderEvaluateActivityStartStyle" />
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/order_start3"
                     style="@style/OrderEvaluateActivityStartStyle" />
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/order_start4"
                     style="@style/OrderEvaluateActivityStartStyle" />
             </LinearLayout>
@@ -108,26 +108,26 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp">
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/buy_start0"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginRight="10dp"
                     android:src="@mipmap/start_solid" />
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/buy_start1"
                     style="@style/OrderEvaluateActivityStartStyle" />
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/buy_start2"
                     style="@style/OrderEvaluateActivityStartStyle" />
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/buy_start3"
                     style="@style/OrderEvaluateActivityStartStyle" />
 
-                <ImageView
+                <com.maibo.lys.xianhuicustomer.myview.CustomImageView
                     android:id="@+id/buy_start4"
                     style="@style/OrderEvaluateActivityStartStyle" />
             </LinearLayout>
@@ -159,23 +159,35 @@
                 android:text="顾问挫" />
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="#fff"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_go_evaluate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:alpha="0.5"
+            android:background="@color/orderTextColor"
+            android:gravity="center"
+            android:text="去抽奖"
+            android:textColor="#fff"
+            android:textSize="18dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center"
-        android:layout_weight="2" >
-        <TextView
-            android:id="@+id/tv_go_evaluate"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/orderTextColor"
-            android:gravity="center"
-            android:alpha="0.5"
-            android:text="去抽奖"
-            android:textColor="#fff"
-            android:textSize="18dp" />
+        android:layout_weight="1"
+        android:gravity="center">
+
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.maibo.lys.xianhuicustomer.myactivity;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -65,6 +66,7 @@ public class MainActivity1 extends FragmentActivity implements View.OnClickListe
         initFragment();
         setTabHeightAndWidth();
         initListener();
+//        avatarImageView= personFragment.getAva
     }
 
     /**
@@ -214,5 +216,14 @@ public class MainActivity1 extends FragmentActivity implements View.OnClickListe
                 String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
             }
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //在拍照、选取照片、裁剪Activity结束后，调用的方法
+        MineFragment mf= (MineFragment) mFragments[2];
+        mf.setActivityResult(requestCode, resultCode, data);
     }
 }
