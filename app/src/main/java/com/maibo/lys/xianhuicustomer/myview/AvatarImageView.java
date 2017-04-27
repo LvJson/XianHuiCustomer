@@ -27,6 +27,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -38,6 +39,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.maibo.lys.xianhuicustomer.myutils.Util;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -393,7 +396,10 @@ public class AvatarImageView extends ImageView {
             case AvatarImageView.REQUEST_IMAGE_AFTER_CROP:
                 //更新头像
                 if (data != null && data.getExtras() != null) {
-                    Bitmap photo = data.getExtras().getParcelable("data");
+//                    Bitmap photo = data.getExtras().getParcelable("data");
+                    Uri cropUri=  data.getData();
+                    Log.e("cropUri",cropUri.getPath());
+                    Bitmap photo= Util.decodeUriAsBitmap(cropUri,getContext());
                     this.setImageBitmap(photo);
                     if (afterCropListener != null) {
                         afterCropListener.afterCrop(photo);
@@ -411,7 +417,16 @@ public class AvatarImageView extends ImageView {
      *               <p>
      *               注：裁剪函数需要两个地址：1.原始图片的地址，2.裁剪后用于存放图片的地址
      */
-    public void startActionCrop(Uri input, Uri output) {
+    public void startActionCrop(Uri input, final Uri output) {
+        cropMyPicture(input, output);
+    }
+
+    /**
+     * 裁剪图片
+     * @param input
+     * @param output
+     */
+    private void cropMyPicture(Uri input, Uri output) {
         Intent intentCamera = new Intent("com.android.camera.action.CROP");
         intentCamera.setDataAndType(input, "image/*");// 源文件地址
         intentCamera.putExtra("crop", true);//发送裁剪信号
@@ -425,7 +440,7 @@ public class AvatarImageView extends ImageView {
         intentCamera.putExtra("outputX", 200);
         intentCamera.putExtra("outputY", 200);
         intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, output);// 输出地址
-        intentCamera.putExtra("return-data", true);//是否将数据保留在Bitmap中返回,这样设置对有些手机而言只会得到缩略图
+        intentCamera.putExtra("return-data", false);//是否将数据保留在Bitmap中返回,这样设置对有些手机而言只会得到缩略图
         ((Activity) this.mContext).startActivityForResult(intentCamera,
                 AvatarImageView.REQUEST_IMAGE_AFTER_CROP);
         //保存裁剪后的图片地址

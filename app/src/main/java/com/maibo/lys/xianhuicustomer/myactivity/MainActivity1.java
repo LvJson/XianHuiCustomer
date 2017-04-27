@@ -51,22 +51,23 @@ public class MainActivity1 extends FragmentActivity implements View.OnClickListe
     @Bind(R.id.ll_tab)
     LinearLayout ll_tab;
     SharedPreferences sp;
-    Fragment homeFragment;
-    Fragment sortFragment;
-    Fragment personFragment;
+    HomePagerRecyclerFragment homeFragment;
+    OrderFormFragment orderFragment;
+    MineFragment mineFragment;
     Fragment mFragments[];
     private int mIndex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
+
         ButterKnife.bind(this);
         initData();
         registPushService();
         initFragment();
         setTabHeightAndWidth();
         initListener();
-//        avatarImageView= personFragment.getAva
+//        avatarImageView= mineFragment.getAva
     }
 
     /**
@@ -86,10 +87,10 @@ public class MainActivity1 extends FragmentActivity implements View.OnClickListe
     }
     private void initFragment() {
         homeFragment = new HomePagerRecyclerFragment();
-        sortFragment = new OrderFormFragment();
-        personFragment = new MineFragment();
+        orderFragment = new OrderFormFragment();
+        mineFragment = new MineFragment();
         //添加到数组
-        mFragments = new Fragment[]{homeFragment, sortFragment, personFragment};
+        mFragments = new Fragment[]{homeFragment, orderFragment, mineFragment};
         //开启事务
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //添加首页
@@ -225,5 +226,14 @@ public class MainActivity1 extends FragmentActivity implements View.OnClickListe
         //在拍照、选取照片、裁剪Activity结束后，调用的方法
         MineFragment mf= (MineFragment) mFragments[2];
         mf.setActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 解决了Fragment重叠的问题
+     * @param outState
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
     }
 }

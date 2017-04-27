@@ -1,8 +1,15 @@
 package com.maibo.lys.xianhuicustomer.myutils;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -230,4 +237,113 @@ public class Util {
         }
     }
 
+    /**
+     * File转uri
+     * @param context
+     * @param imageFile
+     * @return
+     */
+    public static Uri getImageContentUri(Context context, java.io.File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
+                new String[] { filePath }, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            Uri baseUri = Uri.parse("content://media/external/images/media");
+            return Uri.withAppendedPath(baseUri, "" + id);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * 法一
+     * uri转绝对路径
+     * @param selectedVideoUri
+     * @param context
+     * @return
+     */
+    public static String getFilePathFromContentUri(Uri selectedVideoUri,
+                                                   Context context) {
+        String filePath;
+        String[] filePathColumn = {MediaStore.MediaColumns.DATA};
+
+        Cursor cursor = context.getContentResolver().query(selectedVideoUri, filePathColumn, null, null, null);
+//      也可用下面的方法拿到cursor
+//      Cursor cursor = this.context.managedQuery(selectedVideoUri, filePathColumn, null, null, null);
+
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        filePath = cursor.getString(columnIndex);
+        cursor.close();
+        return filePath;
+    }
+
+
+    /**
+     * 法二
+     * 根据 Uri 获取文件的绝对路径
+     *
+     * @param context
+     * @param contentUri
+     * @return
+     */
+    private String getRealPathFromURI(Context context, Uri contentUri) {
+        if (contentUri.getScheme().equals("file")) {
+            return contentUri.getEncodedPath();
+        } else {
+            Cursor cursor = null;
+            try {
+                String[] proj = {MediaStore.Images.Media.DATA};//Media:查询的是图片。Thumbnails:查询的是图片的缩略图
+                cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+                if (null != cursor) {
+                    //从0开始获取该列的下标
+                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    return cursor.getString(column_index);
+                } else {
+                    return "";
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        }
+    }
+
+
+    /**
+     * uri转bitmap
+     * @param uri
+     * @param context
+     * @return
+     */
+    public static Bitmap decodeUriAsBitmap(Uri uri,Context context){
+
+        Bitmap bitmap = null;
+
+        try {
+
+            bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri));
+
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+
+            return null;
+
+        }
+
+        return bitmap;
+
+    }
 }

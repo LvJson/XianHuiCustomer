@@ -2,15 +2,23 @@ package com.maibo.lys.xianhuicustomer.myadapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.maibo.lys.xianhuicustomer.R;
+import com.maibo.lys.xianhuicustomer.myapplication.MyApplication;
 import com.maibo.lys.xianhuicustomer.myentity.Ad;
 import com.maibo.lys.xianhuicustomer.myentity.Project;
 import com.maibo.lys.xianhuicustomer.myinterface.HomeProjectItemClickListener;
@@ -54,6 +62,8 @@ public class HomePagerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         if (viewType == 0) {
             return new ViewPagerHolder(mLayoutInflater.inflate(R.layout.style_viewpager, parent, false));
         } else if (viewType == 1) {
+            return new TextSwitchViewHolder(mLayoutInflater.inflate(R.layout.style_tip_view, parent, false));
+        } else if (viewType == 2) {
             return new HorizonListViewHolder(mLayoutInflater.inflate(R.layout.style_horizon_list, parent, false));
         } else {
             return new ProjectDataListViewHolder(mLayoutInflater.inflate(R.layout.style_vertail_adapter, parent, false));
@@ -63,32 +73,41 @@ public class HomePagerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-       if (holder instanceof ProjectDataListViewHolder) {
-            Picasso.with(context).load(proList.get(position - 2).getImages_url()[0]).into(((ProjectDataListViewHolder) holder).cir_img);
-            ((ProjectDataListViewHolder) holder).tv_pro_name.setText(proList.get(position - 2).getFullname());
-            ((ProjectDataListViewHolder) holder).tv_pro_intrduce.setText(proList.get(position - 2).getSummary());
-           holder.itemView.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   listener.onItemClick(position,proList.get(position-2));
-               }
-           });
+        if (holder instanceof ProjectDataListViewHolder) {
+            Picasso.with(context).load(proList.get(position - 3).getImages_url()[0]).into(((ProjectDataListViewHolder) holder).cir_img);
+            ((ProjectDataListViewHolder) holder).tv_pro_name.setText(proList.get(position - 3).getFullname());
+            ((ProjectDataListViewHolder) holder).tv_pro_intrduce.setText(proList.get(position - 3).getSummary());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(position, proList.get(position - 3));
+                }
+            });
+        }else if (holder instanceof TextSwitchViewHolder){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MyApplication.showToast(context,textSwitchItem+"");
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        return proList.size() + 2;
+        return proList.size() + 3;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
             return 0;
-        } else if (position==1){
+        } else if (position == 1) {
             return 1;
-        }else{
+        } else if (position == 2) {
             return 2;
+        } else {
+            return 3;
         }
 
     }
@@ -98,18 +117,19 @@ public class HomePagerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
      */
     public class ViewPagerHolder extends RecyclerView.ViewHolder {
         LinearLayout dot_layout;
-        TextView tv_intro;
+//        TextView tv_intro;
+
         ViewPagerHolder(View view) {
             super(view);
             viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 //            viewPager.setNestedpParent((ViewGroup) viewPager.getParent());
             dot_layout = (LinearLayout) view.findViewById(R.id.dot_layout);
-            tv_intro = (TextView) view.findViewById(R.id.tv_intro);
+//            tv_intro = (TextView) view.findViewById(R.id.tv_intro);
             viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                     currentItem = position;
-                    updateIntroAndDot(viewPager, tv_intro, dot_layout);
+                    updateIntroAndDot(viewPager, dot_layout);
                 }
 
                 @Override
@@ -124,7 +144,7 @@ public class HomePagerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             });
             initDots(dot_layout);
             viewPager.setAdapter(new MyPagerAdapter(context, list));
-            updateIntroAndDot(viewPager, tv_intro, dot_layout);
+            updateIntroAndDot(viewPager, dot_layout);
         }
     }
 
@@ -145,9 +165,9 @@ public class HomePagerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     /**
      * 更新文本
      */
-    private void updateIntroAndDot(ViewPager viewPager, TextView tv_intro, LinearLayout dot_layout) {
+    private void updateIntroAndDot(ViewPager viewPager, LinearLayout dot_layout) {
         int currentPage = viewPager.getCurrentItem() % list.size();
-        tv_intro.setText(list.get(currentPage).getIntro());
+//        tv_intro.setText(list.get(currentPage).getIntro());
 
         for (int i = 0; i < dot_layout.getChildCount(); i++) {
             dot_layout.getChildAt(i).setEnabled(i == currentPage);
@@ -165,11 +185,13 @@ public class HomePagerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             public void run() {
                 selectNextItem();
             }
+
             private void selectNextItem() {
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        viewPager.setCurrentItem(++currentItem);
+                        if (viewPager != null)
+                            viewPager.setCurrentItem(++currentItem);
                     }
                 });
             }
@@ -188,6 +210,58 @@ public class HomePagerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             executor.shutdownNow();
         }
     }
+
+    /**
+     * 上下滚动的文字
+     */
+    TextSwitcher textSwitcher;
+    int i=0;
+    String items[];
+    int textSwitchItem;
+    public class TextSwitchViewHolder extends RecyclerView.ViewHolder {
+
+
+        TextSwitchViewHolder(View view) {
+            super(view);
+            textSwitcher = (TextSwitcher) view.findViewById(R.id.text_switcher);
+            textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+                @Override
+                public View makeView() {
+                    TextView textView=new TextView(context);
+                    FrameLayout.LayoutParams params=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    textView.setLayoutParams(params);
+                    textView.setGravity(Gravity.CENTER);
+                    textView.setLines(1);
+                    textView.setEllipsize(TextUtils.TruncateAt.END);
+                    textView.setTextSize(16);
+                    textView.setTextColor(context.getResources().getColor(R.color.all_text_color));
+                    return textView;
+                }
+            });
+
+            textSwitcher.setInAnimation(context, R.anim.slide_in_bottom);
+            textSwitcher.setOutAnimation(context, R.anim.slide_out_top);
+            items = new String[] { "新春特别活动，楚舆狂歌套限时出售，先到者先得之，迟来者不候哦，快点加入我们吧！", "三周年红发效果图放出！", "冬至趣味活动开启，一起来吃冬至宴席。" };
+            Message msg = mHandler.obtainMessage(1);
+            msg.what = i;
+            mHandler.sendMessage(msg);
+
+        }
+    }
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            textSwitchItem=i % items.length;
+            textSwitcher.setText(items[i % items.length]);
+            i++;
+            Message msgg = mHandler.obtainMessage(1);
+            msgg.what = i;
+            mHandler.sendMessageDelayed(msgg, 3000);
+        }
+    };
+
     /**
      * 横向ListView
      */
@@ -216,7 +290,8 @@ public class HomePagerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             tv_pro_intrduce = (TextView) view.findViewById(R.id.tv_pro_intrduce);
         }
     }
-    public void setOnMyItemClickListenre(HomeProjectItemClickListener listenre){
-        this.listener=listenre;
+
+    public void setOnMyItemClickListenre(HomeProjectItemClickListener listenre) {
+        this.listener = listenre;
     }
 }
